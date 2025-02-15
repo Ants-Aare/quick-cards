@@ -27,3 +27,21 @@ Leonardo da Vinci                   // answer
 ```
 
 ![Showcase](https://github.com/Ants-Aare/quick-cards/blob/main/examples/showcase.png)
+
+```typ
+#show: quick-cards-show.with(
+  columns:2,
+  rows:4,
+  card-template: flashcard-modern, // try using different styles!
+  parse-body: false
+)
+
+#category[Derivation]              // same functionality, you can even mix auto and manual
+#question[What's the power rule of derivation?]
+#hint[Don't forget to multiply by the exponent!]
+#answer[$                          // include math, Cetz, svgs, images, etc 
+  f(x) &= x^n\
+  f'(x) &= n #sym.dot x^(n-1)
+$]
+```
+![Showcase-Modern](https://github.com/Ants-Aare/quick-cards/blob/main/examples/showcase-modern.png)

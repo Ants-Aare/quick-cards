@@ -1,7 +1,7 @@
 #import "utils.typ": is-sequence, is-kind, is-heading, is-metadata, padright, get-all-children
 
 #let category(name)= metadata((kind: "quick-cards.category", name: name))
-#let question(body, card-template:(question, answer, hint, category) => (front:question, back:answer)) = metadata((kind: "quick-cards.question", body: body, template: card-template))
+#let question(body, card-template:none) = metadata((kind: "quick-cards.question", body: body, template: card-template))
 #let answer(body)=metadata((kind: "quick-cards.answer", body: body))
 #let hint(body)=metadata((kind: "quick-cards.hint", body: body))
 
@@ -104,7 +104,7 @@
       } else if is-kind(child, "quick-cards.category"){
         if current-question != none{
           answers.push(current-answer.sum())
-          questions = padright(questions, answers.len())
+          // questions = padright(questions, answers.len())
           questions.push((current-question, none))
           categories.push(current-category)
           hints.push(current-hint)
@@ -172,10 +172,11 @@
   let cards = ()
   for value in range(0, calc.max(questions.len(), answers.len(), categories.len())) {
     let category = if value >= categories.len(){categories.at(categories.len(), default:"")}else{ categories.at(value, default:"")}
-    let question = questions.at(value, default:none).at(0)
+    let q = questions.at(value, default:none)
+    let question = if q != none{q.at(0, default:none)} 
     let answer = answers.at(value, default:none)
     let hint = hints.at(value, default: none)
-    let template = questions.at(value, default:none).at(1, default:none)
+    let template = if q != none{q.at(1, default:none)}
     if template == none{template = card-template}
     
     cards.push(template(question: question, answer: answer, hint:hint, category: category))
