@@ -25,9 +25,7 @@ Quick-Cards is a package for creating flashcards in Typst as fast as possible. I
 Leonardo da Vinci                   // answer
 
 ```
-
 ![Showcase](https://github.com/Ants-Aare/quick-cards/blob/main/examples/showcase.png)
-
 ```typ
 #show: quick-cards-show.with(
   columns:2,
@@ -45,3 +43,29 @@ Leonardo da Vinci                   // answer
 $]
 ```
 ![Showcase-Modern](https://github.com/Ants-Aare/quick-cards/blob/main/examples/showcase-modern.png)
+
+Alternatively try sending data directly to the quick-cards-layout function instead of using show rules. This way you can import data, turn it into content and apply a proper layout:
+```typ
+#quick-cards-layout(
+  columns: 3,
+  rows:5,
+  cards: csv("Test.csv")
+    .map(x=> flashcard-simple(
+      question: x.at(0),
+      answer: x.at(1),
+      hint: x.at(2),
+      category: x.at(2)
+    ))
+)
+```
+Use images instead of text categories, by defining image/category pairs:
+```typ
+#set-category-database(
+  (
+    Art: image("Assets/icon-category-art.svg"),
+    Movies: image("Assets/icon-category-movies.svg"),
+    Nature: image("Assets/icon-category-nature.svg"),
+    People: image("Assets/icon-category-people.svg"),
+  ),
+)
+```
